@@ -120,7 +120,7 @@ def play(table, command="start", score_list=[0,0]):
 """Запуск игры"""
 
 command = 'start'  # Инициализация игры
-table_size = int(input())  # Ввод размера доски
+table_size = int(input("Игра успешно запущена! Пожалуйста, выберите размер поля: "))  # Ввод размера доски
 table = create_table(table_size)  # Создание доски соответствующего размера
 
 while command != 'exit':

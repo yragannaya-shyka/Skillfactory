@@ -144,7 +144,7 @@ class Board:
                     print("Ранен!")
                     return True
 
-        self.field[dot.x][dot.y] = "."
+        self.field[dot.x][dot.y] = "T"
         print("Мимо!")
         return False
 

@@ -1,7 +1,9 @@
 import requests
-import json
-base_key = 'RUB'
-quote_key = 'USD'
-r = requests.get(f"https://min-api.cryptocompare.com/data/price?fsym={base_key}&tsyms={quote_key}")
-resp = json.loads(r.content)[quote_key]
-print(resp)
+import lxml.html
+from lxml import etree
+
+
+html = requests.get('https://www.python.org/').content
+tree = lxml.html.document_fromstring(html)
+title = tree.xpath('/html/head/title/text()')
+print(title)

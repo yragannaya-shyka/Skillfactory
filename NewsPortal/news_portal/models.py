@@ -1,6 +1,7 @@
 from django.db import models
 from django.db.models import Sum
 from django.contrib.auth.models import User
+from django.urls import reverse
 
 class Author(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -19,9 +20,17 @@ class Author(models.Model):
         self.save()
         return posts_rating + comments_rating + posts_comments_rating
 
+    def __str__(self):
+        return f'{self.user}'
+
+
 
 class Category(models.Model):
     name = models.CharField(max_length=254, unique=True)
+
+    def __str__(self):
+        return f'{self.name}'
+
 
 
 class Post(models.Model):
@@ -55,6 +64,10 @@ class Post(models.Model):
     def preview(self):
         self.preview = ''.join([self.content[:124], '...'])
         return self.preview
+
+    def get_absolute_url(self):
+        return reverse("post_detail", kwargs={"pk": self.pk})
+
 
 
 class PostCategory(models.Model):

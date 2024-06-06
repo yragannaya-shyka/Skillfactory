@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.urls import reverse_lazy
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 
 # Create your views here.
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
@@ -50,7 +50,8 @@ class PostDetail(DetailView):
     context_object_name = "post"
 
 
-class NewsCreate(CreateView):
+class NewsCreate(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
+    permission_required = ('news_portal.add_post')
     form_class = PostForm
     model = Post
     template_name = 'post_edit.html'
@@ -63,7 +64,8 @@ class NewsCreate(CreateView):
 
 
 
-class NewsUpdate(LoginRequiredMixin, UpdateView):
+class NewsUpdate(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
+    permission_required = ('news_portal.change_post')
     form_class = PostForm
     model = Post
     template_name = 'post_edit.html'

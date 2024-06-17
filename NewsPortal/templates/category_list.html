@@ -1,0 +1,20 @@
+<html>
+<head>
+    <title>{{ category.name }}</title>
+</head>
+<body>
+    <h1>Категория: {{ category.name }}</h1>
+    <p>
+        {% if is_not_subscriber %}
+            <a href="{% url 'subscribe' category.id %}" class="btn btn-secondary btn-sm">Подписаться</a>
+        {% else %}
+            Вы подписаны на эту категорию.
+        {% endif %}
+    </p>
+    <ul>
+        {% for post in posts %}
+            <li><a href="{% url 'post_detail' post.id %}">{{ post.topic }}</a></li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

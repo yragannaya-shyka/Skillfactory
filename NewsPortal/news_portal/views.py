@@ -10,6 +10,10 @@ from .forms import PostForm
 from django.contrib.auth.decorators import login_required
 from email import message
 
+from django.http import HttpResponse
+from django.views import View
+from .tasks import hello, printer
+
 class PostsList(ListView):
     model = Post
     ordering = "public_date"
@@ -106,3 +110,10 @@ def subscribe(request, pk):
     message = 'Вы подписались на категорию'
 
     return render(request, 'subscribe.html', {'category': category, 'message': message})
+
+
+class IndexView(View):
+    def get(self, request):
+        printer.delay(10)
+        hello.delay()
+        return HttpResponse('Hello!')

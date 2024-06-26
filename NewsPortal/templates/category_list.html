@@ -11,10 +11,11 @@
             Вы подписаны на эту категорию.
         {% endif %}
     </p>
-    <ul>
+    <ul>{% cache 100 cache_link %}
         {% for post in posts %}
             <li><a href="{% url 'post_detail' post.id %}">{{ post.topic }}</a></li>
         {% endfor %}
+        {% endcache %}
     </ul>
 </body>
 </html>

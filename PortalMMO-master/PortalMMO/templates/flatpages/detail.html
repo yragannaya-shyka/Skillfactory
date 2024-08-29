@@ -1,0 +1,18 @@
+{% extends 'flatpages/default.html' %}
+
+{% block title %}
+Detail
+{% endblock title %}
+
+{% block content %}
+<h1>{{ detail.headline }}</h1>
+<h2>{{ detail.some_datatime|date:'d M Y' }}</h2>
+<hr>
+<body>{{ detail.text|safe  }}</body>
+<hr>
+<a href="{% url 'update' detail.id %}">Изменить</a>
+<hr>
+<a href="{% url 'delete' detail.id %}">Удалить</a>
+<hr>
+<a href="{% url 'response_create' detail.id %}">Оставить отзыв</a>
+{% endblock content %}

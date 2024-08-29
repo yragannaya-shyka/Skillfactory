@@ -1,0 +1,41 @@
+{% extends 'flatpages/default.html' %}
+
+{% block content %}
+<h2>Страница авторизованного пользователя {{request.user.username}}</h2>
+<div> Здесь может содержаться персональная информация для каждого пользователя </div>
+<!--{% if is_not_authors %}-->
+<!--<button> <a href="sign/upgrade/"> Хочу стать автором!</a> </button>-->
+<!--{% endif %}-->
+<form action="" method="get">
+    {{ filterset.form }}
+    <input type="submit" value="Найти">
+</form>
+<button> <a href="/">Сбросить</a> </button>
+<hr>
+{% if responses %}
+    {% for response in responses %}
+        {% if not response.status %}
+            <h3>Отклики, ожидающие подтверждения:</h3>
+            <p>{{ response.user|safe }} {{ response.some_datatime|date:"d E Y, H:i" }} </p>
+            <hr>
+            {{ response.text|safe }}
+            <hr>
+            <a href="{% url 'accept_response' response.pk %}">Принять</a>
+            <a href="{% url 'delete_response' response.pk %}">Удалить</a>
+        {% endif %}
+    {% endfor %}
+            <h3>Принятые:</h3>
+    {% for response in responses %}
+        {% if response.status %}
+            <p>{{ response.user|safe }} {{ response.some_datatime|date:"d E Y, H:i" }} </p>
+            <hr>
+            {{ response.text|safe }}
+            <hr>
+            <a href="{% url 'delete_response' response.pk %}">Удалить</a>
+        {% endif %}
+    {% endfor %}
+{% endif %}
+<p>
+    <button> <a href="/accounts/logout/">Выйти</a> </button>
+</p>
+{% endblock %}
